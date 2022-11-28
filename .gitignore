@@ -49,4 +49,5 @@ po/*~
 rsconnect/
 
 # Paid tyepfaces
-*/CaniculeDisplay*
+fonts/CaniculeDisplay*
+ggplot_iib_files/libs/revealjs/dist/fonts/CaniculeDisplay*
