@@ -1,5 +1,4 @@
 library(tidyverse)
-library(jsonlite)
 
 colors <- c("#606FAF", "#E4544B")
 
