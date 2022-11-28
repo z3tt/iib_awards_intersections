@@ -51,3 +51,6 @@ rsconnect/
 # Paid tyepfaces
 fonts/CaniculeDisplay*
 ggplot_iib_files/libs/revealjs/dist/fonts/CaniculeDisplay*
+
+# Hiqh-res PDF file
+ggplot_iib_hd.pdf
