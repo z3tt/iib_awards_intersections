@@ -324,7 +324,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   ) +
   scale_y_continuous(
     expand = c(mult = .02, add = 0),limits = c(0, NA),
-    breaks = 0:5*10000, labels = scales::comma_format()
+    breaks = 0:5*10000, labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = c("#3c89d9", "#1ec99b", "#F7B01B", "#a26e7c"), name = NULL,
@@ -361,16 +361,6 @@ ggplot(bikes, aes(temp_feel, count)) +
 
 # Setup
 
-##  {background-image="img/tidyverse-packages.png" background-position="center" background-size="100%"}
-
-::: footer
-:::
-
-##  {background-image="img/tidyverse-packages-ggplot.png" background-position="center" background-size="100%"}
-
-::: footer
-:::
-
 ## The ggplot2 Package
 
 <br>
@@ -395,6 +385,16 @@ library(ggplot2)
 # install.packages("tidyverse")
 library(tidyverse)
 ```
+:::
+
+##  {background-image="img/tidyverse-packages.png" background-position="center" background-size="100%"}
+
+::: footer
+:::
+
+##  {background-image="img/tidyverse-packages-ggplot.png" background-position="center" background-size="100%"}
+
+::: footer
 :::
 
 
@@ -594,7 +594,7 @@ ggplot(data = bikes) +
 ```{r}
 #| label: ggplot-aesthetics-inside
 #| output-location: column
-#| code-line-numbers: "3|2,3"
+#| code-line-numbers: "2,3"
 ggplot(
   data = bikes,
   mapping = aes(x = temp_feel, y = count)
@@ -606,7 +606,7 @@ ggplot(
 ```{r}
 #| label: ggplot-aesthetics-inside.implicit
 #| output-location: column
-#| code-line-numbers: "3|2,3"
+#| code-line-numbers: "2,3"
 ggplot(
   bikes,
   aes(x = temp_feel, y = count)
@@ -721,7 +721,7 @@ ggplot(
     -   Map the color of the lines to `day_night`.
     -   Add points for each observation.
     -   Turn the points into diamonds.
-    -   Bonus: create a time series of bike counts in 2016 during nights only, with points colored by season.
+-   **Bonus:** Create a time series of bike counts in 2016 during nights only,<br>with points colored by season.
 :::
 
 ## Solution Exercise
@@ -730,6 +730,7 @@ ggplot(
 #| label: exercise-timeseries-1
 #| output-location: column
 #| code-line-numbers: "3|5"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel)
@@ -744,6 +745,7 @@ ggplot(
 #| label: exercise-timeseries-line
 #| fig-height: 4.3
 #| code-line-numbers: "3,5"
+#| purl: false
 ggplot(
     bikes,
     aes(x = temp_feel, y = date)
@@ -756,6 +758,7 @@ ggplot(
 #| label: exercise-timeseries-path
 #| fig-height: 4.3
 #| code-line-numbers: "3,5"
+#| purl: false
 ggplot(
     bikes,
     aes(x = temp_feel, y = date)
@@ -772,6 +775,7 @@ ggplot(
 #| label: exercise-timeseries-2
 #| output-location: column
 #| code-line-numbers: "6|5,6,7"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel)
@@ -787,6 +791,7 @@ ggplot(
 #| label: exercise-timeseries-3
 #| output-location: column
 #| code-line-numbers: "8"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel)
@@ -803,6 +808,7 @@ ggplot(
 #| label: exercise-timeseries-4
 #| output-location: column
 #| code-line-numbers: "9|6,9|3,6,9"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel)
@@ -821,6 +827,7 @@ ggplot(
 #| label: exercise-timeseries-5
 #| output-location: column
 #| code-line-numbers: "4,6,7|3,4"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel,
@@ -836,6 +843,7 @@ ggplot(
 #| label: exercise-timeseries-6
 #| output-location: column
 #| code-line-numbers: "8|9"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel,
@@ -854,6 +862,7 @@ ggplot(
 #| label: exercise-timeseries-7
 #| output-location: column
 #| code-line-numbers: "8"
+#| purl: false
 ggplot(
     bikes,
     aes(x = date, y = temp_feel,
@@ -877,6 +886,7 @@ ggplot(
 #| label: exercise-timeseries-bonus-1
 #| output-location: column
 #| code-line-numbers: "2,3|5,6,7|8,9,10"
+#| purl: false
 ggplot(
     data = bikes, 
     aes(x = date, y = count)
@@ -895,6 +905,7 @@ ggplot(
 #| label: exercise-timeseries-bonus-2
 #| output-location: column
 #| code-line-numbers: "2,3,4,5"
+#| purl: false
 ggplot(
     data = filter(
       bikes, year == 2016 &
@@ -916,6 +927,7 @@ ggplot(
 #| label: exercise-timeseries-bonus-3
 #| output-location: column
 #| code-line-numbers: "1,2,3,4,5|6,7,8"
+#| purl: false
 bikes %>% 
   filter(
     year == 2016 &
@@ -938,6 +950,7 @@ bikes %>%
 #| label: exercise-timeseries-bonus-4
 #| output-location: column
 #| code-line-numbers: "1,2,3,4|7"
+#| purl: false
 bikes_sub <- filter(
   bikes, 
   year == 2016 & day_night == "night"
@@ -1928,7 +1941,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_discrete()
 ```
@@ -1949,7 +1962,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_discrete(
     type = c("#3c89d9", "#1ec99b", "#f7b01b", "#a26e7c")
@@ -1972,7 +1985,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = c("#3c89d9", "#1ec99b", "#f7b01b", "#a26e7c")
@@ -2002,7 +2015,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0),
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted
@@ -2025,7 +2038,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_brewer(
     palette = "Dark2"
@@ -2064,7 +2077,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted,
@@ -2088,7 +2101,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted,
@@ -2113,7 +2126,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted,
@@ -2123,6 +2136,278 @@ g +
       override.aes = list(size = 5)
     )
   )
+```
+
+
+# Coordinate Systems
+
+## Coordinate Systems
+
+<br>
+
+<b class='simple-highlight-grn' style='font-size:2.6rem;'>= interpret the position aesthetics</b><br><br>
+
+::: incremental
+-   **linear coordinate systems:** preserve the geometrical shapes
+    -   `coord_cartesian()`
+    -   `coord_fixed()`
+    -   `coord_flip()`
+-   **non-linear coordinate systems:** likely change the geometrical shapes
+    -   `coord_polar()`
+    -   `coord_map()` and `coord_sf()`
+    -   `coord_trans()`
+:::
+
+## Cartesian Coordinate System
+
+```{r}
+#| label: coord-cartesian
+#| output-location: column
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian()
+```
+
+## Cartesian Coordinate System
+
+```{r}
+#| label: coord-cartesian-zoom
+#| output-location: column
+#| code-line-numbers: "6,7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000)
+  )
+```
+
+## Changing Limits
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-ylim
+#| fig-height: 3.5
+#| code-line-numbers: "6,7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000)
+  )
+```
+
+```{r}
+#| label: scale-y-limits
+#| fig-height: 3.5
+#| code-line-numbers: "6,7,8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_y_continuous(
+    limits = c(NA, 15000)
+  )
+```
+:::
+
+## Clipping
+
+```{r}
+#| label: coord-clip
+#| output-location: column
+#| code-line-numbers: "8"
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000),
+    clip = "off"
+  )
+```
+
+## Clipping
+
+```{r}
+#| label: coord-clip-text
+#| output-location: column
+#| code-line-numbers: "2,3|6,7,8,9,10|12"
+ggplot(
+    filter(bikes, is_holiday == TRUE),
+    aes(x = temp_feel, y = count)
+  ) +
+  geom_point() +
+  geom_text(
+    aes(label = season),
+    nudge_x = .3,
+    hjust = 0
+  ) +
+  coord_cartesian(
+    clip = "off"
+  )
+```
+
+## ... or better use {ggrepel}
+
+```{r}
+#| label: coord-clip-text-repel
+#| output-location: column
+#| code-line-numbers: "6"
+ggplot(
+    filter(bikes, is_holiday == TRUE),
+    aes(x = temp_feel, y = count)
+  ) +
+  geom_point() +
+  ggrepel::geom_text_repel(
+    aes(label = season),
+    nudge_x = .3,
+    hjust = 0
+  ) +
+  coord_cartesian(
+    clip = "off"
+  )
+```
+
+## Remove All Padding
+
+```{r}
+#| label: coord-expand-off-clip
+#| output-location: column
+#| code-line-numbers: "7|8"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count)
+  ) +
+  geom_point() +
+  coord_cartesian(
+    expand = FALSE,
+    clip = "off"
+  )
+```
+
+## Fixed Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-fixed
+#| fig-height: 4.2
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = temp)
+  ) +
+  geom_point() +
+  coord_fixed()
+```
+
+::: fragment
+```{r}
+#| label: coord-fixed-custom
+#| fig-height: 4.2
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = temp)
+  ) +
+  geom_point() +
+  coord_fixed(ratio = 4)
+```
+:::
+:::
+
+## Flipped Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-comp-flip
+#| fig-height: 4.1
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+```
+
+```{r}
+#| label: coord-flip
+#| fig-height: 4.1
+#| code-line-numbers: "6"
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_flip()
+```
+:::
+
+## Flipped Coordinate System
+
+::: {layout-ncol="2"}
+```{r}
+#| label: coord-cartesian-switch-x-y
+#| fig-height: 4.1
+#| code-line-numbers: "3,6"
+ggplot(
+    bikes,
+    aes(y = weather_type)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+```
+
+```{r}
+#| label: coord-flip-again
+#| fig-height: 4.1
+#| code-line-numbers: "3,6"
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_flip()
+```
+:::
+
+## Reminder: Sort Your Bars!
+
+```{r}
+#| label: forcats-sort-infreq
+#| output-location: column
+#| code-line-numbers: "3|2"
+ggplot(
+    filter(bikes, !is.na(weather_type)),
+    aes(y = fct_infreq(weather_type))
+  ) +
+  geom_bar()
+```
+
+## Reminder: Sort Your Bars!
+
+```{r}
+#| label: forcats-sort-infreq-rev
+#| output-location: column
+#| code-line-numbers: "3,4,5"
+ggplot(
+    filter(bikes, !is.na(weather_type)),
+    aes(y = fct_rev(
+      fct_infreq(weather_type)
+    ))
+  ) +
+  geom_bar()
 ```
 
 
@@ -2225,7 +2510,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   ) +
   scale_y_continuous(
     expand = c(mult = .02, add = 0),limits = c(0, NA),
-    breaks = 0:5*10000, labels = scales::comma_format()
+    breaks = 0:5*10000, labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = c("#3c89d9", "#1ec99b", "#F7B01B", "#a26e7c"), name = NULL,
@@ -2368,7 +2653,7 @@ g2 <- g1 +
     expand = c(mult = .02, add = 0),
     limits = c(0, NA),
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = c("#3c89d9", "#1ec99b", "#F7B01B", "#a26e7c"), 
@@ -2994,277 +3279,7 @@ ggplot(
   )
 ```
 
-
 # Coordinate Systems
-
-## Coordinate Systems
-
-<br>
-
-<b class='simple-highlight-grn' style='font-size:2.6rem;'>= interpret the position aesthetics</b><br><br>
-
-::: incremental
--   **linear coordinate systems:** preserve the geometrical shapes
-    -   `coord_cartesian()`
-    -   `coord_fixed()`
-    -   `coord_flip()`
--   **non-linear coordinate systems:** likely change the geometrical shapes
-    -   `coord_polar()`
-    -   `coord_map()` and `coord_sf()`
-    -   `coord_trans()`
-:::
-
-## Cartesian Coordinate System
-
-```{r}
-#| label: coord-cartesian
-#| output-location: column
-#| code-line-numbers: "6"
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian()
-```
-
-## Cartesian Coordinate System
-
-```{r}
-#| label: coord-cartesian-zoom
-#| output-location: column
-#| code-line-numbers: "6,7,8"
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian(
-    ylim = c(NA, 15000)
-  )
-```
-
-## Changing Limits
-
-::: {layout-ncol="2"}
-```{r}
-#| label: coord-cartesian-ylim
-#| fig-height: 3.5
-#| code-line-numbers: "6,7,8"
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian(
-    ylim = c(NA, 15000)
-  )
-```
-
-```{r}
-#| label: scale-y-limits
-#| fig-height: 3.5
-#| code-line-numbers: "6,7,8"
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  scale_y_continuous(
-    limits = c(NA, 15000)
-  )
-```
-:::
-
-## Clipping
-
-```{r}
-#| label: coord-clip
-#| output-location: column
-#| code-line-numbers: "8"
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian(
-    ylim = c(NA, 15000),
-    clip = "off"
-  )
-```
-
-## Clipping
-
-```{r}
-#| label: coord-clip-text
-#| output-location: column
-#| code-line-numbers: "2,3|6,7,8,9,10|12"
-ggplot(
-    filter(bikes, is_holiday == TRUE),
-    aes(x = temp_feel, y = count)
-  ) +
-  geom_point() +
-  geom_text(
-    aes(label = season),
-    nudge_x = .3,
-    hjust = 0
-  ) +
-  coord_cartesian(
-    clip = "off"
-  )
-```
-
-## ... or better use {ggrepel}
-
-```{r}
-#| label: coord-clip-text-repel
-#| output-location: column
-#| code-line-numbers: "6"
-ggplot(
-    filter(bikes, is_holiday == TRUE),
-    aes(x = temp_feel, y = count)
-  ) +
-  geom_point() +
-  ggrepel::geom_text_repel(
-    aes(label = season),
-    nudge_x = .3,
-    hjust = 0
-  ) +
-  coord_cartesian(
-    clip = "off"
-  )
-```
-
-## Remove All Padding
-
-```{r}
-#| label: coord-expand-off-clip
-#| output-location: column
-#| code-line-numbers: "7|8"
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = count)
-  ) +
-  geom_point() +
-  coord_cartesian(
-    expand = FALSE,
-    clip = "off"
-  )
-```
-
-## Fixed Coordinate System
-
-::: {layout-ncol="2"}
-```{r}
-#| label: coord-fixed
-#| fig-height: 4.2
-#| code-line-numbers: "6"
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = temp)
-  ) +
-  geom_point() +
-  coord_fixed()
-```
-
-::: fragment
-```{r}
-#| label: coord-fixed-custom
-#| fig-height: 4.2
-#| code-line-numbers: "6"
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = temp)
-  ) +
-  geom_point() +
-  coord_fixed(ratio = 4)
-```
-:::
-:::
-
-## Flipped Coordinate System
-
-::: {layout-ncol="2"}
-```{r}
-#| label: coord-cartesian-comp-flip
-#| fig-height: 4.1
-#| code-line-numbers: "6"
-ggplot(
-    bikes,
-    aes(x = weather_type)
-  ) +
-  geom_bar() +
-  coord_cartesian()
-```
-
-```{r}
-#| label: coord-flip
-#| fig-height: 4.1
-#| code-line-numbers: "6"
-ggplot(
-    bikes,
-    aes(x = weather_type)
-  ) +
-  geom_bar() +
-  coord_flip()
-```
-:::
-
-## Flipped Coordinate System
-
-::: {layout-ncol="2"}
-```{r}
-#| label: coord-cartesian-switch-x-y
-#| fig-height: 4.1
-#| code-line-numbers: "3,6"
-ggplot(
-    bikes,
-    aes(y = weather_type)
-  ) +
-  geom_bar() +
-  coord_cartesian()
-```
-
-```{r}
-#| label: coord-flip-again
-#| fig-height: 4.1
-#| code-line-numbers: "3,6"
-ggplot(
-    bikes,
-    aes(x = weather_type)
-  ) +
-  geom_bar() +
-  coord_flip()
-```
-:::
-
-## Reminder: Sort Your Bars!
-
-```{r}
-#| label: forcats-sort-infreq
-#| output-location: column
-#| code-line-numbers: "3|2"
-ggplot(
-    filter(bikes, !is.na(weather_type)),
-    aes(y = fct_infreq(weather_type))
-  ) +
-  geom_bar()
-```
-
-## Reminder: Sort Your Bars!
-
-```{r}
-#| label: forcats-sort-infreq-rev
-#| output-location: column
-#| code-line-numbers: "3,4,5"
-ggplot(
-    filter(bikes, !is.na(weather_type)),
-    aes(y = fct_rev(
-      fct_infreq(weather_type)
-    ))
-  ) +
-  geom_bar()
-```
 
 ## Circular Corrdinate System
 

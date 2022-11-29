@@ -1,8 +1,21 @@
-# install.packages("ggplot2")
-# library(ggplot2)
+################################################################################
+#            Information is Beautiful Awards Intersections Workshop            #
+#     "Designing Charts in R: Reproducible Graphic Design with {ggplot2}"      #
+#                     Cédric Scherer | November 29, 2022                       #
+################################################################################
 
+
+## to run all codes, install the following typefaces and restart RStudio:
+## Roboto Condensed, Cabinet Grotesk, Tabular (all located in the `fonts` folder) 
+
+## also, install the following packages: tidyverse, systemfonts, ggrepel
 # install.packages("tidyverse")
+# install.packages("systemfonts")
+# install.packages("ggrepel")
+
+
 library(tidyverse)
+
 
 bikes <- readr::read_csv(
   here::here("data", "london-bikes-custom.csv"),
@@ -12,9 +25,11 @@ bikes <- readr::read_csv(
 
 bikes$season <- forcats::fct_inorder(bikes$season)
 
-?ggplot
+
+?ggplot ## or place your cursor on the function and hit F1
 
 ggplot(data = bikes)
+
 
 ggplot(data = bikes) +
   aes(x = temp_feel, y = count)
@@ -74,137 +89,24 @@ ggplot(
     alpha = .5
   )
 
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel)
-  ) +
-  geom_line()
 
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = date)
-  ) +
-  geom_line()
+## Exercise --------------------------------------------------------------------
 
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = date)
-  ) +
-  geom_path()
+## - Create a chart showing a time series of `temp_feel`.
+##     - What is the difference between `geom_line()` and `geom_path()`?
+##     - Map the color of the lines to `day_night`.
+##     - Add points for each observation.
+##     - Turn the points into diamonds.
 
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel)
-  ) +
-  geom_line(
-    aes(color = day_night)
-  )
+## add your code here:
+ggplot(bikes, aes(x = date, y = temp_feel))
 
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel)
-  ) +
-  geom_line(
-    aes(color = day_night)
-  ) +
-  geom_point()
 
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel)
-  ) +
-  geom_line(
-    aes(color = day_night)
-  ) +
-  geom_point(
-    aes(color = day_night)
-  )
+## - Bonus: Create a time series of bike counts in 2016 during nights only,
+##          with points colored by season.
 
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel,
-        color = day_night)
-  ) +
-  geom_line() +
-  geom_point()
 
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel,
-        color = day_night)
-  ) +
-  geom_line() +
-  geom_point(
-    shape = "diamond",
-    size = 3
-  )
-
-ggplot(
-    bikes,
-    aes(x = date, y = temp_feel,
-        color = day_night)
-  ) +
-  geom_line() +
-  geom_point(
-    shape = 18,
-    size = 3
-  )
-
-ggplot(
-    data = bikes, 
-    aes(x = date, y = count)
-  ) +
-  geom_line(
-    color = "grey"
-  ) +
-  geom_point(
-    aes(color = season)
-  )
-
-ggplot(
-    data = filter(
-      bikes, year == 2016 &
-             day_night == "night"
-    ),
-    aes(x = date, y = count)
-  ) +
-  geom_line(
-    color = "grey"
-  ) +
-  geom_point(
-    aes(color = season)
-  )
-
-bikes %>% 
-  filter(
-    year == 2016 &
-    day_night == "night"
-  ) %>% 
-  ggplot(
-    aes(x = date, y = count)
-  ) +
-  geom_line(
-    color = "grey"
-  ) +
-  geom_point(
-    aes(color = season)
-  )
-
-bikes_sub <- filter(
-  bikes, 
-  year == 2016 & day_night == "night"
-)
-
-ggplot(
-    data = bikes_sub, 
-    aes(x = date, y = count)
-  ) +
-  geom_line(
-    color = "grey"
-  ) +
-  geom_point(
-    aes(color = season)
-  )
+## Exercise End ----------------------------------------------------------------
 
 ggplot(
     bikes,
@@ -371,7 +273,7 @@ g + theme_minimal()
 
 g + theme_light(
   base_size = 14,
-  base_family = "Roboto Condensed" ## replace with one of your local typefaces
+  base_family = "Roboto Condensed"
 )
 
 theme_set(theme_light())
@@ -385,12 +287,10 @@ theme_set(theme_light(
 
 g
 
-# install.packages("systemfonts")
-
 library(systemfonts)
 
 system_fonts() %>%
-  filter(str_detect(family, "Cabinet")) %>% ## replace with one of your local typefaces
+  filter(str_detect(family, "Cabinet")) %>%
   pull(name) %>%
   sort()
 
@@ -627,7 +527,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_discrete()
 
@@ -641,7 +541,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_discrete(
     type = c("#3c89d9", "#1ec99b", "#f7b01b", "#a26e7c")
@@ -657,7 +557,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = c("#3c89d9", "#1ec99b", "#f7b01b", "#a26e7c")
@@ -680,7 +580,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0),
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted
@@ -696,7 +596,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_brewer(
     palette = "Dark2"
@@ -716,7 +616,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted,
@@ -733,7 +633,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted,
@@ -751,7 +651,7 @@ g +
   scale_y_continuous(
     expand = c(mult = .02, add = 0), 
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = colors_sorted,
@@ -762,15 +662,155 @@ g +
     )
   )
 
-## ggsave(g, filename = "my_plot.png")
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian()
 
-## ggsave("my_plot.png")
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000)
+  )
 
-## ggsave("my_plot.png", width = 8, height = 5, dpi = 600)
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000)
+  )
 
-## ggsave("my_plot.pdf", width = 20, height = 12, unit = "cm", device = cairo_pdf)
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  scale_y_continuous(
+    limits = c(NA, 15000)
+  )
+
+ggplot(
+    bikes,
+    aes(x = season, y = count)
+  ) +
+  geom_boxplot() +
+  coord_cartesian(
+    ylim = c(NA, 15000),
+    clip = "off"
+  )
+
+ggplot(
+    filter(bikes, is_holiday == TRUE),
+    aes(x = temp_feel, y = count)
+  ) +
+  geom_point() +
+  geom_text(
+    aes(label = season),
+    nudge_x = .3,
+    hjust = 0
+  ) +
+  coord_cartesian(
+    clip = "off"
+  )
+
+ggplot(
+    filter(bikes, is_holiday == TRUE),
+    aes(x = temp_feel, y = count)
+  ) +
+  geom_point() +
+  ggrepel::geom_text_repel(
+    aes(label = season),
+    nudge_x = .3,
+    hjust = 0
+  ) +
+  coord_cartesian(
+    clip = "off"
+  )
+
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = count)
+  ) +
+  geom_point() +
+  coord_cartesian(
+    expand = FALSE,
+    clip = "off"
+  )
+
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = temp)
+  ) +
+  geom_point() +
+  coord_fixed()
+
+ggplot(
+    bikes,
+    aes(x = temp_feel, y = temp)
+  ) +
+  geom_point() +
+  coord_fixed(ratio = 4)
+
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_flip()
+
+ggplot(
+    bikes,
+    aes(y = weather_type)
+  ) +
+  geom_bar() +
+  coord_cartesian()
+
+ggplot(
+    bikes,
+    aes(x = weather_type)
+  ) +
+  geom_bar() +
+  coord_flip()
+
+ggplot(
+    filter(bikes, !is.na(weather_type)),
+    aes(y = fct_infreq(weather_type))
+  ) +
+  geom_bar()
+
+ggplot(
+    filter(bikes, !is.na(weather_type)),
+    aes(y = fct_rev(
+      fct_infreq(weather_type)
+    ))
+  ) +
+  geom_bar()
+
+# ggsave(g, filename = "my_plot.png")
+
+# ggsave("my_plot.png")
+
+# ggsave("my_plot.png", width = 8, height = 5, dpi = 600)
+
+# ggsave("my_plot.pdf", width = 20, height = 12, unit = "cm", device = cairo_pdf)
 
 
+
+## WRAP-UP ---------------------------------------------------------------------
 
 library(tidyverse)
 
@@ -848,7 +888,7 @@ g2 <- g1 +
     expand = c(mult = .02, add = 0),
     limits = c(0, NA),
     breaks = 0:5*10000, 
-    labels = scales::comma_format()
+    labels = scales::label_comma()
   ) +
   scale_color_manual(
     values = c("#3c89d9", "#1ec99b", "#F7B01B", "#a26e7c"), 
@@ -857,7 +897,7 @@ g2 <- g1 +
   labs(
     x = "Feels-Like Temperature", y = NULL,
     caption = "Data: Transport for London (TfL), Jan 2015—Dec 2016",
-    title = "Reported TfL bike rents versus feels-like temperature in London, 2015—2016",
+    title = "Reported TfL bike rents versus feels-like temperature in London, 2015–2016",
     color = NULL
   ) 
 
@@ -915,8 +955,10 @@ theme_update(
 g2
 
 
+## APPENDIX --------------------------------------------------------------------
 
-## APPENDIX
+# reset theme
+theme_set(theme_light(base_size = 14, base_Family = "Roboto Condensed"))
 
 ggplot(bikes, aes(x = temp_feel, y = count)) +
   stat_smooth(geom = "smooth")
@@ -1177,144 +1219,6 @@ ggplot(
     breaks = 1:4,
     labels = levels(bikes$season)
   )
-
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian()
-
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian(
-    ylim = c(NA, 15000)
-  )
-
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian(
-    ylim = c(NA, 15000)
-  )
-
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  scale_y_continuous(
-    limits = c(NA, 15000)
-  )
-
-ggplot(
-    bikes,
-    aes(x = season, y = count)
-  ) +
-  geom_boxplot() +
-  coord_cartesian(
-    ylim = c(NA, 15000),
-    clip = "off"
-  )
-
-ggplot(
-    filter(bikes, is_holiday == TRUE),
-    aes(x = temp_feel, y = count)
-  ) +
-  geom_point() +
-  geom_text(
-    aes(label = season),
-    nudge_x = .3,
-    hjust = 0
-  ) +
-  coord_cartesian(
-    clip = "off"
-  )
-
-ggplot(
-    filter(bikes, is_holiday == TRUE),
-    aes(x = temp_feel, y = count)
-  ) +
-  geom_point() +
-  ggrepel::geom_text_repel(
-    aes(label = season),
-    nudge_x = .3,
-    hjust = 0
-  ) +
-  coord_cartesian(
-    clip = "off"
-  )
-
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = count)
-  ) +
-  geom_point() +
-  coord_cartesian(
-    expand = FALSE,
-    clip = "off"
-  )
-
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = temp)
-  ) +
-  geom_point() +
-  coord_fixed()
-
-ggplot(
-    bikes,
-    aes(x = temp_feel, y = temp)
-  ) +
-  geom_point() +
-  coord_fixed(ratio = 4)
-
-ggplot(
-    bikes,
-    aes(x = weather_type)
-  ) +
-  geom_bar() +
-  coord_cartesian()
-
-ggplot(
-    bikes,
-    aes(x = weather_type)
-  ) +
-  geom_bar() +
-  coord_flip()
-
-ggplot(
-    bikes,
-    aes(y = weather_type)
-  ) +
-  geom_bar() +
-  coord_cartesian()
-
-ggplot(
-    bikes,
-    aes(x = weather_type)
-  ) +
-  geom_bar() +
-  coord_flip()
-
-ggplot(
-    filter(bikes, !is.na(weather_type)),
-    aes(y = fct_infreq(weather_type))
-  ) +
-  geom_bar()
-
-ggplot(
-    filter(bikes, !is.na(weather_type)),
-    aes(y = fct_rev(
-      fct_infreq(weather_type)
-    ))
-  ) +
-  geom_bar()
 
 ggplot(
     filter(bikes, !is.na(weather_type)),
