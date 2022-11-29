@@ -1,4 +1,4 @@
-pacman::p_load(tidyverse, officer, rvg)
+pacman::p_load(tidyverse, officer, rvg, usmap)
 
 colors <- c("#606FAF", "#E4544B")
 
@@ -44,6 +44,35 @@ doc <- officer::read_pptx() %>%
                                                width = 7, 
                                                height =7, bg = "white") )
 print(doc, target = "plot2.pptx")
+
+## Faceted Maps --------------------------------
+
+df_states = df_simus %>% 
+  select(-abbr) %>% 
+  left_join(usmap::us_map(regions = "states") %>% 
+              rename(state = full) %>% 
+              select(-abbr)) %>%
+  mutate(winner_color = case_when(winner_overall == "Trump" & winner == "Trump" ~ "red",
+                                  winner_overall == "Trump" & winner == "Biden" ~ "white",
+                                  winner_overall == "Biden" & winner == "Trump" ~ "white",
+                                  winner_overall == "Biden" & winner == "Biden" ~ "blue"),
+         map_label = case_when(winner_overall == "Trump" ~ " A TRUMP WIN!",
+                               winner_overall == "Biden" ~ " A BIDEN WIN!"))
+
+ggplot() + geom_polygon(data=df_states, 
+                        aes(x=x, y=y, fill=winner_color, group = group),
+                        color="gray") +
+  facet_wrap(~sim, ncol = 6) +
+  scale_fill_manual("", values = c("blue","red","white")) +
+  geom_text(data = df_states, x=median(df_states$x), y=min(df_states$y), 
+            aes(label=map_label,color=map_label))+
+  scale_color_manual("", values = c("blue","red"))+
+  theme(axis.text = element_blank(),
+        axis.title = element_blank(),
+        legend.position="none",
+        strip.text = element_blank(),
+        plot.background = element_rect(fill = "transparent", colour = NA))
+ggsave("faceted_map.png", width = 13, height = 8,bg="white")
 
 ## Probability over time -------------------------------------------------------
 
