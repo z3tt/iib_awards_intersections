@@ -12,7 +12,7 @@ Sys.setlocale("LC_TIME", "C")
 
 ## simulation data used for map small multiples --------------------------------
 
-df_simus <- readr::read_csv(here::here("fivethirtyeight", "simulations.csv"))
+df_simus <- readr::read_csv(here::here("data", "simulations.csv"))
 
 
 plot1 = df_simus %>%
@@ -76,7 +76,7 @@ ggsave("faceted_map.png", width = 13, height = 8,bg="white")
 
 ## Probability over time -------------------------------------------------------
 
-df_probs <- readr::read_csv(here::here("fivethirtyeight", "probability_over_time.csv"))
+df_probs <- readr::read_csv(here::here("data", "probability_over_time.csv"))
 
 
 ggplot(df_probs, aes(x = date, y = winprob, color = candidate, fill = candidate)) + 
@@ -131,8 +131,8 @@ ggplot(df_probs, aes(x = date, y = popular_votes_avg, group = candidate)) +
 
 ## electoral vote distributions ------------------------------------------------
 
-df_votes <- readr::read_csv(here::here("fivethirtyeight", "electoral_votes.csv"))
-df_votes_expanded <- readr::read_csv(here::here("fivethirtyeight", "electoral_votes_expanded.csv"))
+df_votes <- readr::read_csv(here::here("data", "electoral_votes.csv"))
+df_votes_expanded <- readr::read_csv(here::here("data", "electoral_votes_expanded.csv"))
 
 
 ggplot(df_votes, aes(x = evs, y = chance, fill = candidate)) + 
