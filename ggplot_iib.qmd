@@ -252,7 +252,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   labs(
     x = "Feels-Like Temperature", y = NULL,
     caption = "Data: Transport for London (TfL), Jan 2015—Dec 2016",
-    title = "Reported TfL bike rents versus feels-like temperature in London, 2015—2016"
+    title = "Reported TfL bike rents versus feels-like temperature in London, 2015–2016"
   ) 
 ```
 
@@ -333,7 +333,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   labs(
     x = "Feels-Like Temperature", y = NULL,
     caption = "Data: Transport for London (TfL), Jan 2015—Dec 2016",
-    title = "Reported TfL bike rents versus feels-like temperature in London, 2015—2016"
+    title = "Reported TfL bike rents versus feels-like temperature in London, 2015–2016"
   ) +
   theme_light(
     base_size = 18, base_family = "Cabinet Grotesk Regular S01"
@@ -342,7 +342,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   theme(
     plot.title.position = "plot",
     plot.caption.position = "plot",
-    plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.7)),
+    plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.6)),
     axis.text = element_text(family = "Tabular"),
     axis.title.x = element_text(hjust = 0, color = "grey30", margin = margin(t = 12)),
     strip.text = element_text(family = "Cabinet Grotesk Bold S01", size = rel(1.15)),
@@ -2234,7 +2234,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   labs(
     x = "Feels-Like Temperature", y = NULL,
     caption = "Data: Transport for London (TfL), Jan 2015—Dec 2016",
-    title = "Reported TfL bike rents versus feels-like temperature in London, 2015—2016"
+    title = "Reported TfL bike rents versus feels-like temperature in London, 2015–2016"
   ) +
   theme_light(
     base_size = 18, base_family = "Cabinet Grotesk Regular S01"
@@ -2243,7 +2243,7 @@ ggplot(bikes, aes(temp_feel, count)) +
   theme(
     plot.title.position = "plot",
     plot.caption.position = "plot",
-    plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.7)),
+    plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.6)),
     axis.text = element_text(family = "Tabular"),
     axis.title.x = element_text(hjust = 0, color = "grey30", margin = margin(t = 12)),
     strip.text = element_text(family = "Cabinet Grotesk Bold S01", size = rel(1.15)),
@@ -2377,7 +2377,7 @@ g2 <- g1 +
   labs(
     x = "Feels-Like Temperature", y = NULL,
     caption = "Data: Transport for London (TfL), Jan 2015—Dec 2016",
-    title = "Reported TfL bike rents versus feels-like temperature in London, 2015—2016",
+    title = "Reported TfL bike rents versus feels-like temperature in London, 2015–2016",
     color = NULL
   ) 
 ```
@@ -2406,7 +2406,7 @@ g3 <- g2 +
   theme(
     plot.title.position = "plot",
     plot.caption.position = "plot",
-    plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.7)),
+    plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.6)),
     axis.text = element_text(family = "Tabular"),
     axis.title.x = element_text(hjust = 0, color = "grey30", margin = margin(t = 12)),
     strip.text = element_text(family = "Cabinet Grotesk Bold S01", size = rel(1.15)),
@@ -2447,7 +2447,7 @@ theme_set(
 theme_update(
   plot.title.position = "plot",
   plot.caption.position = "plot",
-  plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.7)),
+  plot.title = element_text(family = "Cabinet Grotesk Black S01", size = rel(1.6)),
   axis.text = element_text(family = "Tabular"),
   axis.title.x = element_text(hjust = 0, color = "grey30", margin = margin(t = 12)),
   strip.text = element_text(family = "Cabinet Grotesk Bold S01", size = rel(1.15)),
@@ -2461,8 +2461,6 @@ theme_update(
   legend.background = element_rect(color = "#f8f8f8", fill = "#f8f8f8"),
   plot.background = element_rect(color = "#f8f8f8", fill = "#f8f8f8")
 )
-
-g2
 ```
 
 ------------------------------------------------------------------------
