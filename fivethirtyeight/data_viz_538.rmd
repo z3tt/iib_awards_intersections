@@ -45,8 +45,8 @@ invisible(Sys.setlocale("LC_TIME", "C"))
 
 ## Distributions of Simulation Results for Electoral Votes
 
-```{r dist-electroal-v1, fig.width=12, fig.height=13.5}
-df_votes <- readr::read_csv(here::here("fivethirtyeight", "electoral_votes.csv"))
+```{r dist-electoral-v1, fig.width=8, fig.height=9}
+df_votes <- readr::read_csv(here::here("data", "electoral_votes.csv"))
 
 df_votes <- 
   df_votes %>% 
@@ -82,7 +82,7 @@ ggplot(df_votes, aes(x = evs, y = chance, fill = candidate)) +
   ) +
   facet_wrap(~candidate, ncol = 1, scales = "free_x") + 
   scale_x_continuous(limits = range(df_votes$evs)) +
-  scale_y_continuous() +
+  scale_y_continuous(guide = "none") +
   scale_color_manual(values = rev(colors)) +
   scale_fill_manual(values = rev(colors)) +
   coord_cartesian(expand = FALSE, ylim = c(NA, 2)) +
@@ -93,10 +93,12 @@ ggplot(df_votes, aes(x = evs, y = chance, fill = candidate)) +
     subtitle = "All possible Electoral College outcomes for each candidate, with higher bars\nshowing outcomes that appeared more often in our 40,000 simulations"
   ) +
   theme(strip.text = ggtext::element_textbox(size = 15, face = "italic", margin = margin(l = 100)))
+
+ggsave("dist-electoral-v1.png", width = 8, height = 9)
 ```
 
-```{r dist-electoral-v2, fig.width=12, fig.height=13.5}
-df_votes_expanded <- readr::read_csv(here::here("fivethirtyeight", "electoral_votes_expanded.csv"))
+```{r dist-electoral-v2, fig.width=8, fig.height=9}
+df_votes_expanded <- readr::read_csv(here::here("data", "electoral_votes_expanded.csv"))
 
 df_votes_expanded <- 
   df_votes_expanded %>% 
@@ -124,8 +126,9 @@ ggplot(df_votes_expanded, aes(x = evs, fill = candidate)) +
     hjust = .5, family = "Familjen Grotesk", fontface = "italic",
     lineheight = .9, stat = "unique"
   ) +
-  facet_wrap(~candidate, ncol = 1) + 
-  scale_y_continuous() +
+  facet_wrap(~candidate, ncol = 1, scales = "free_x") + 
+  scale_x_continuous(limits = range(df_votes$evs)) +
+  scale_y_continuous(guide = "none") +
   scale_color_manual(values = rev(colors)) +
   scale_fill_manual(values = rev(colors)) +
   coord_cartesian(expand = FALSE, ylim = c(NA, .02)) +
@@ -136,6 +139,8 @@ ggplot(df_votes_expanded, aes(x = evs, fill = candidate)) +
     subtitle = "All possible Electoral College outcomes for each candidate, with higher bars\nshowing outcomes that appeared more often in our 40,000 simulations"
   ) +
   theme(strip.text = ggtext::element_textbox(size = 15, face = "italic", margin = margin(l = 100)))
+
+ggsave("dist-electoral-v2.png", width = 8, height = 9)
 ```
 
 
@@ -143,12 +148,12 @@ ggplot(df_votes_expanded, aes(x = evs, fill = candidate)) +
 ## Probabilities over Time
 
 ```{r}
-df_probs <- readr::read_csv(here::here("fivethirtyeight", "probability_over_time.csv"))
+df_probs <- readr::read_csv(here::here("data", "probability_over_time.csv"))
 ```
 
 ### Chance of Winning
 
-```{r time-chance, fig.width=12, fig.height=7.5}
+```{r time-chance, fig.width=8, fig.height=5}
 ggplot(df_probs, aes(x = date, y = winprob, color = candidate, fill = candidate)) + 
   geom_line(color = "white", size = 3) + 
   geom_line(size = .9) + 
@@ -180,11 +185,13 @@ ggplot(df_probs, aes(x = date, y = winprob, color = candidate, fill = candidate)
     axis.ticks.length.x = unit(.3, "lines"),
     plot.margin = margin(20, 45, 20, 20)
   )
+
+ggsave("time-chance.png", width = 8, height = 5)
 ```
 
 ### Electoral Votes
 
-```{r time-electoral, fig.width=12, fig.height=7.5}
+```{r time-electoral, fig.width=8, fig.height=5}
 ggplot(df_probs, aes(x = date, y = electoral_votes_avg, 
                      color = candidate, group = candidate)) + 
   geom_ribbon(
@@ -217,11 +224,13 @@ ggplot(df_probs, aes(x = date, y = electoral_votes_avg,
     axis.ticks.length.x = unit(.3, "lines"),
     plot.margin = margin(20, 45, 20, 20)
   )
+
+ggsave("time-electoral.png", width = 8, height = 5)
 ```
 
 ### Popular Votes
 
-```{r time-popular, fig.width=12, fig.height=7.5}
+```{r time-popular, fig.width=8, fig.height=5}
 ggplot(df_probs, aes(x = date, y = popular_votes_avg, 
                      color = candidate, group = candidate)) + 
   geom_ribbon(
@@ -258,6 +267,8 @@ ggplot(df_probs, aes(x = date, y = popular_votes_avg,
     axis.ticks.length.x = unit(.3, "lines"),
     plot.margin = margin(20, 55, 20, 20)
   )
+
+ggsave("time-popular.png", width = 8, height = 5)
 ```
 
 
@@ -265,7 +276,7 @@ ggplot(df_probs, aes(x = date, y = popular_votes_avg,
 ## Maps Simulation Outcomes (Small Multiples)
 
 ```{r}
-df_simus <- readr::read_csv(here::here("fivethirtyeight", "simulations.csv"))
+df_simus <- readr::read_csv(here::here("data", "simulations.csv"))
 
 ## exploration
 ggplot(df_simus, aes(y = fct_rev(factor(state)), fill = winner)) + 
@@ -282,4 +293,57 @@ ggplot(df_simus, aes(y = fct_rev(factor(sim)), fill = winner)) +
   labs(x = "Number of states won", y = "Simulation", fill = "Winner:")
 ```
 
+```{r faceted-map, fig.width=17, fig.height=8}
+library(usmap)
+
+df_states <- df_simus %>% 
+  select(-abbr) %>% 
+  left_join(
+    usmap::us_map(regions = "states") %>% 
+      rename(state = full) %>% 
+      select(-abbr)
+  ) %>%
+  mutate(
+    winner_color = case_when(
+      winner_overall == "Trump" & winner == "Trump" ~ colors[2],
+      winner_overall == "Trump" & winner == "Biden" ~ "white",
+      winner_overall == "Biden" & winner == "Trump" ~ "white",
+      winner_overall == "Biden" & winner == "Biden" ~ colors[1]
+    ),
+    map_label = case_when(
+      winner_overall == "Trump" ~ " A TRUMP WIN!",
+      winner_overall == "Biden" ~ " A BIDEN WIN!"
+    )
+  )
+
+ggplot() + 
+  geom_polygon(
+    data = df_states, 
+    aes(x = x, y = y, group = group),
+    color = "black", fill = "white", size = .8
+  ) +
+  geom_polygon(
+    data = df_states, 
+    aes(x = x, y = y, fill = winner_color, group = group),
+    color = "grey85", size = .2
+  ) +
+  geom_text(
+    data = df_states, x = median(df_states$x), y = min(df_states$y), 
+    aes(label = map_label,color = map_label), family = "DecimaMonoPro"
+  ) +
+  facet_wrap(~sim, ncol = 6) +
+  coord_fixed() +
+  scale_fill_manual(name = NULL, values = c(colors, "white")) +
+  scale_color_manual(name = NULL, values = c(colors))+
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    legend.position = "none",
+    strip.text = element_blank(),
+    panel.spacing = unit(1, "lines"),
+    plot.background = element_rect(fill = "transparent", colour = NA)
+  )
+
+ggsave("faceted-map.png", width = 17, height = 8, bg = bg)
+```
 
