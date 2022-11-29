@@ -5,7 +5,7 @@ library(jsonlite)
 ## simulation data used for map small multiples --------------------------------
 
 df_simus_wide <-
-  fromJSON(here::here("fivethirtyeight", "simulations.json")) %>% 
+  fromJSON(here::here("data", "simulations.json")) %>% 
   as.data.frame() %>% 
   rename("winner_overall" = winner) %>% 
   unnest(cols = c(evs, states)) %>% 
@@ -15,7 +15,6 @@ df_simus_wide <-
     names_to = "var",
     values_to = "val"
   )
-
 
 df_simus <- 
   df_simus_wide %>% 
@@ -38,14 +37,14 @@ df_simus <-
   dplyr::select(-state_id)
 
 ## save data
-readr::write_csv(df_simus, here::here("fivethirtyeight", "simulations.csv"))
+readr::write_csv(df_simus, here::here("data", "simulations.csv"))
 
 
 
 ## Probability over time for time series ---------------------------------------
 
 df_probs <-
-  fromJSON(here::here("fivethirtyeight", "probability_over_time.json")) %>% 
+  fromJSON(here::here("data", "probability_over_time.json")) %>% 
   as.data.frame() %>% 
   unnest(c(candidates)) %>% 
   unnest(c(dates)) %>% 
@@ -62,14 +61,14 @@ df_probs <-
   dplyr::select(-updated)
 
 ## save data
-readr::write_csv(df_probs, here::here("fivethirtyeight", "probability_over_time.csv"))
+readr::write_csv(df_probs, here::here("data", "probability_over_time.csv"))
 
 
 
 ## electoral votes used for distributions --------------------------------------
 
 df_votes <-
-  fromJSON(here::here("fivethirtyeight", "electoral_votes.json")) %>% 
+  fromJSON(here::here("data", "electoral_votes.json")) %>% 
   as.data.frame() %>% 
   unnest(c(candidates)) %>% 
   unnest(c(distribution)) %>% 
@@ -81,5 +80,5 @@ df_votes_expanded <-
   uncount(chance)
 
 ## save data
-readr::write_csv(df_votes, here::here("fivethirtyeight", "electoral_votes.csv"))
-readr::write_csv(df_votes_expanded, here::here("fivethirtyeight", "electoral_votes_expanded.csv"))
+readr::write_csv(df_votes, here::here("data", "electoral_votes.csv"))
+readr::write_csv(df_votes_expanded, here::here("data", "electoral_votes_expanded.csv"))
