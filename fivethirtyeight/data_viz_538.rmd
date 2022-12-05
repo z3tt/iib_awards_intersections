@@ -277,15 +277,19 @@ ggsave("time-popular.png", width = 8, height = 5)
 
 ```{r}
 df_simus <- readr::read_csv(here::here("data", "simulations.csv"))
+```
 
+
+```{r exploration-outcomes-states, fig.width=8, fig.height=10}
 ## exploration
 ggplot(df_simus, aes(y = fct_rev(factor(state)), fill = winner)) + 
   geom_bar() + 
   scale_fill_manual(values = colors) + 
   coord_cartesian(expand = FALSE) +
   labs(x = "Number of simulation outcomes", y = NULL, fill = "Winner:")
+```
 
-
+```{r exploration-outcomes-sims, fig.width=8, fig.height=7}
 ggplot(df_simus, aes(y = fct_rev(factor(sim)), fill = winner)) + 
   geom_bar() + 
   scale_fill_manual(values = colors) + 
